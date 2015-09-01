@@ -172,12 +172,18 @@ def converter_main():
 	# Read each Z-matrix and store the required information in a list called "all_info"
 	all_info = []
 	rotate_translate = ['rotate @ 0 qa 1','rotate @ 0 qb 1','rotate @ 0 qc 1','translate ta @ 0','translate tb @ 0','translate tc @ 0']
+	i = 0
 	for filename in files:
 		topas_zm, atom_labels = read_zmatrix(filename)
 		site_list, distance_restraints = get_sites_and_restraints(atom_labels)
-		all_info.append([['\''+filename+' - site list\n']+site_list+['\n'], ['\''+filename+' - rigid body\n']+topas_zm+['\n']+rotate_translate+['\n'],\
-		['\''+filename+' - mapping restraints\n']+distance_restraints+['\n']])
-	
+		if i == 0:
+			all_info.append([['\''+filename+' - site list\n']+site_list+['\n'], ['\''+filename+' - rigid body\n']+topas_zm+['\n']+rotate_translate+['\n'],\
+			["\'Once Z-matrix mapping is complete, delete all lines below this one"]+['\''+filename+' - mapping restraints\n']+distance_restraints+['\n']])
+		else:
+			all_info.append([['\''+filename+' - site list\n']+site_list+['\n'], ['\''+filename+' - rigid body\n']+topas_zm+['\n']+rotate_translate+['\n'],\
+			['\''+filename+' - mapping restraints\n']+distance_restraints+['\n']])
+		i+=1
+			
 	# Create an output name based on the input filenames
 	outname = ""
 	for filename in files:
@@ -185,6 +191,7 @@ def converter_main():
 	outname +='rigid-body.inp'
 
 	with open(outname, "wb") as output_inp:
+		output_inp.write("\'Once Z-matrix mapping is complete, delete all lines above this one that begin with the keyword \'site\'\n\n")
 		if include_torsion_refinement_macro == True:
 			output_inp.write("macro "+torsion_refinement_macro_name+" {}   \' insert @ symbol between curly brackets to toggle torsion refinement, i.e. {@}\n\n")
 		i = 0
