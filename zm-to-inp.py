@@ -169,13 +169,14 @@ def converter_main():
 			filename = checkfilename(filename,".zmatrix")
 			files.append(filename)
 	
-	# Read each Z-matrix and store the required information in a list called "final_output"
-	final_output = []
+	# Read each Z-matrix and store the required information in a list called "all_info"
+	all_info = []
+	rotate_translate = ['rotate @ 0 qa 1','rotate @ 0 qb 1','rotate @ 0 qc 1','translate ta @ 0','translate tb @ 0','translate tc @ 0']
 	for filename in files:
 		topas_zm, atom_labels = read_zmatrix(filename)
 		site_list, distance_restraints = get_sites_and_restraints(atom_labels)
-		inp_file = ['\'*** '+filename+' ***\n']+site_list+['\n']+topas_zm+['\n']+distance_restraints+['\n']+3*['rotate @ 0 qa 1']+3*['translate ta @ 0']+['\n']+['only_penalties']
-		final_output.append(inp_file)
+		all_info.append([['\''+filename+' - site list\n']+site_list+['\n'], ['\''+filename+' - rigid body\n']+topas_zm+['\n']+rotate_translate+['\n'],\
+		['\''+filename+' - mapping restraints\n']+distance_restraints+['\n']])
 	
 	# Create an output name based on the input filenames
 	outname = ""
@@ -183,21 +184,17 @@ def converter_main():
 		outname += filename.partition(".zmatrix")[0]+"_"
 	outname +='rigid-body.inp'
 
-	# Write out the topas rigid bodies. If more than one Z-matrix is processed, all after the first one will be automatically commented out for individual
-	# mapping onto the existing solution sites.	
 	with open(outname, "wb") as output_inp:
 		if include_torsion_refinement_macro == True:
 			output_inp.write("macro "+torsion_refinement_macro_name+" {}   \' insert @ symbol between curly brackets to toggle torsion refinement, i.e. {@}\n\n")
-		for i in range(0,len(final_output)):
-			for line in final_output[i]:
-				output_inp.write(str(line)+"\n")
-			output_inp.write("\n")
-			if i == 0 and len(final_output) > 1:
-				output_inp.write("\n/*\n\n")
-		
-		if len(final_output) > 1:
-			output_inp.write("\n*/")
-		
+		i = 0
+		while i < len(all_info)+1:
+			for entry in all_info:
+				for line in entry[i]:
+					output_inp.write(str(line)+"\n")
+			i+=1
+		output_inp.write("only_penalties\n\nOut_CIF_STR(\"mapped_ZMs.cif\")")
+			
 	output_inp.close()
 		
 	print '\nSuccess. File written to ', outname
