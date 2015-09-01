@@ -195,7 +195,7 @@ def converter_main():
 		if include_torsion_refinement_macro == True:
 			output_inp.write("macro "+torsion_refinement_macro_name+" {}   \' insert @ symbol between curly brackets to toggle torsion refinement, i.e. {@}\n\n")
 		i = 0
-		while i < len(all_info)+1:
+		while i < len(all_info[0]):
 			for entry in all_info:
 				for line in entry[i]:
 					output_inp.write(str(line)+"\n")
