@@ -1,6 +1,8 @@
 # zmatrix-to-inp
 Easily convert DASH Z-matrices into TOPAS rigid bodies
 
+Contact markspillman *at* gmail.com for queries.
+
 #### Requires:
 - [Python 2.7](https://www.python.org/)          
  Other versions of Python may also work, but this has not been tested.
