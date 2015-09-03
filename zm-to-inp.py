@@ -200,7 +200,7 @@ def converter_main():
 				for line in entry[i]:
 					output_inp.write(str(line)+"\n")
 			i+=1
-		output_inp.write("only_penalties\n\nOut_CIF_STR(\"mapped_ZMs.cif\")")
+		output_inp.write("only_penalties\n\nchi2_convergence_criteria 0.000001\n\nOut_CIF_STR(\"mapped_ZMs.cif\")")
 			
 	output_inp.close()
 		
