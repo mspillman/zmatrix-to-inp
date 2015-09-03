@@ -161,7 +161,7 @@ def converter_main():
 		except:
 			print "You did not enter a number! Please try again"
 			exit()
-		for i in range(0,number+1):
+		for i in range(0,number):
 			filename = checkfilename(None,".zmatrix")
 			files.append(filename)
 	else:
