@@ -4,8 +4,10 @@ Easily convert DASH Z-matrices into TOPAS rigid bodies
 Contact markspillman *at* gmail.com for queries.
 
 #### Requires:
-- [Python 2.7](https://www.python.org/)          
- Other versions of Python may also work, but this has not been tested.
+- [Python 2.7](https://www.python.org/) for zm-to-inp.py
+- Python 3.x for zm-to-inp-py3.py  
+ 
+ Extremely limited testing has been done for Python 3, but it does seem to work. Feel free to get in touch if it doesn't!
 
 The output file is for use with [TOPAS](https://www.bruker.com/products/x-ray-diffraction-and-elemental-analysis/x-ray-diffraction/xrd-software/overview/topas.html) which is also available with an [academic license](http://www.topas-academic.net/)
 
