@@ -1,4 +1,3 @@
-import csv
 import sys
 import os
 import re
@@ -25,7 +24,7 @@ torsion_refinement_macro_name = "R"
 def checkfilename(file, extension):
     question = "Enter name of "+extension+" file: "
     if file == None:
-        file = raw_input(question)
+        file = input(question)
         file2 = file.rpartition('.') # Check to see if the full filename has been entered or just the root (without mol2 extension)
         if len(file2[2]) < 1:
             file = file+extension
@@ -44,7 +43,7 @@ def checkfilename(file, extension):
             file = file.rpartition(".")[0]+extension
     while not os.path.exists(file):
         print("\nCannot find file with name",file,"\nPlease double check and try again, or type exit to quit.")
-        file = raw_input(question)
+        file = input(question)
         if file == "exit":
             exit()
         else:
@@ -66,7 +65,6 @@ def read_zmatrix(filename):
     with open(filename, "r") as ZM_in:
         for line in ZM_in:
             line = list(filter(None,line.strip().split(" ")))
-            print(line)
             if i > 2:
                 atom_labels.append(line[13])
                 # First line of topas ZM has the first atom only - line[13]
