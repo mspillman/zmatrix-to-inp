@@ -1,4 +1,13 @@
 # zmatrix-to-inp
+
+Note - I've just refactorerd the code and tidied things up a lot compared to the spaghetti code that I wrote almost a decade ago! I've also written a convenient web app to save you from having to download the script and run it locally. It can be accessed here:
+
+[https://zm-to-inp.streamlit.app/](https://zm-to-inp.streamlit.app/)
+
+I will update the rest of this README when I get time to reflect the updates.
+
+---
+
 Easily convert DASH Z-matrices into TOPAS rigid bodies
 
 Contact markspillman *at* gmail.com for queries.
