@@ -15,10 +15,10 @@ if option == "Instructions":
         instructions = f.read()
     st.markdown(instructions)
 elif option == "About":
-    """This web app was writtent by [Mark Spillman](https://mspillman.github.io/blog/).
+    """This web app was written by [Mark Spillman](https://mspillman.github.io/blog/).
     The source code is available
     on my github [here](https://github.com/mspillman/zmatrix-to-inp). It can
-    also be run as a standalone python program you can download and customise
+    also be run as a standalone python script.
     Feel free to submit bugs, suggestions and enhancements and I'll do my best
     to help."""
 else:
