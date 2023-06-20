@@ -1,14 +1,26 @@
 import streamlit as st
 from zmatrixtoinp import Zmatrix
 
+st.set_page_config(page_title='ZM to inp', page_icon = ":test_tube:",
+                    layout = 'centered', initial_sidebar_state = 'auto')
+
 st.title("Z-matrix to inp converter")
+
 with st.sidebar:
-    option = st.radio("Options",["Converter","Instructions"])
+    option = st.radio("Options",["Converter","Instructions","About"])
 
 if option == "Instructions":
+
     with open("Instructions.md", "r") as f:
         instructions = f.read()
     st.markdown(instructions)
+elif option == "About":
+    """This web app was writtent by [Mark Spillman](https://mspillman.github.io/blog/).
+    The source code is available
+    on my github [here](https://github.com/mspillman/zmatrix-to-inp). It can
+    also be run as a standalone python program you can download and customise
+    Feel free to submit bugs, suggestions and enhancements and I'll do my best
+    to help."""
 else:
 
     st.write("## Upload files")

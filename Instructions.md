@@ -1,8 +1,8 @@
 Instructions for use with TOPAS
 
-The following instructions assume a basic familiarity with TOPAS used via launch mode. For more detailed information, see the TOPAS manual and excellent tutorials by John Evans.
+The following instructions assume a basic familiarity with TOPAS used via launch mode. For more detailed information, see the TOPAS manual and excellent [tutorials by John Evans](https://topas.webspace.durham.ac.uk/).
 
-1. Once the crystal structure has been solved as normal, save the solution as a .cif and create a TOPAS Rietveld refinement input file. Perform a scale-factor-only Rietveld refinement to ensure everything has worked correctly. The easiest way to do this is to use the Durham TOPAS jEdit tools to set up the .inp file and to read in the .cif.
+1. Once the crystal structure has been solved as normal, save the solution as a .cif and create a TOPAS Rietveld refinement input file. Perform a scale-factor-only Rietveld refinement to ensure everything has worked correctly. The easiest way to do this is to use the [Durham TOPAS jEdit tools](https://topas.webspace.durham.ac.uk/) to set up the .inp file and to read in the .cif.
 
 2. Once the scale-only Rietveld .inp file has been created and has been run successfully, use DASH to create Z-matrices **from the solution .cif** - this is important as it means the Z-matrices contain the same torsion angles found in the solution. Once these Z-matrices have been obtained, use this web app to convert them into the correct TOPAS format. Download the resultant .inp file, and open it in a text editor. Copy and paste the contents of the whole file to the bottom of the scale-only Rietveld .inp file. Save this as "map-zmatrices.inp".
 
