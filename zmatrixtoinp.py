@@ -2,8 +2,13 @@ class Zmatrix(object):
     """
     Read a DASH Z-matrix and convert to a TOPAS rigid body
     """
-    def __init__(self,name=None):
+    def __init__(self,name=None, bnonH="bnonH", bH="bH", refinement_macro="R", 
+                useH=True):
         self.name = name
+        self.bnonH = bnonH
+        self.bH = bH
+        self.refinement_macro = refinement_macro
+        self.useH = useH
         self.bond = []
         self.angle = []
         self.torsion = []
@@ -32,7 +37,7 @@ class Zmatrix(object):
                     self.bond.append(line[1])
                     self.angle.append(line[3])
                     self.torsion.append(line[5])
-                    self.refine.append("R" if line[6] == "1" else "")
+                    self.refine.append(self.refinement_macro if line[6] == "1" else "")
                     self.occupancy.append(line[11])
                     self.atom1.append(line[13])
                     if i > 3:
@@ -53,7 +58,7 @@ class Zmatrix(object):
         """
         output = [
             "\'Once Z-matrix mapping is complete, delete all lines above this one that begin with the keyword \'site\'\n",
-            "macro R {}   \' insert @ symbol between curly brackets to toggle torsion refinement, i.e. {@}\n\n"
+            f"macro {self.refinement_macro} {{}}   \' insert @ symbol between curly brackets to toggle torsion refinement, i.e. {{@}}\n\n"
             ]
         return output
 
@@ -74,7 +79,9 @@ class Zmatrix(object):
         output.append(f"\n\'{self.name} - site list\n\n")
         for i, atom in enumerate(self.atom1):
             atom += "Z"
-            site = f"site {atom:<5}       x  0  y  0  z  0      occ {self.element[i]:<2}  {self.occupancy[i]}      beq = bnonH;\n"
+            e = self.element[i]
+            b = self.bH if e == "H" else self.bnonH
+            site = f"site {atom:<5}       x  0  y  0  z  0      occ {e:<2}  {self.occupancy[i]}      beq = {b};\n"
             output.append(site)
         output.append(f"\n\n\'{self.name} - rigid body\n")
         output.append("\nrigid\n")
@@ -122,9 +129,11 @@ class Zmatrix(object):
         if header:
             output.append("\n\n\'Once Z-matrix mapping is complete, delete all lines below this one\n")
         output.append(f"\n\'{self.name} - mapping restraints\n\n")
-        for atom in self.atom1:
+        for i, atom in enumerate(self.atom1):
             atomz = atom+"Z"
-            site = f"Distance_Restrain({atom:<7} {atomz},  0,0,0,1)\n"
+            e = self.element[i]
+            if e != "H" or self.useH:
+                site = f"Distance_Restrain({atom:<7} {atomz},  0,0,0,1)\n"
             output.append(site)
         return output
 
@@ -153,9 +162,9 @@ if __name__ == "__main__":
         for file in files:
             with open(file, "r", encoding="utf-8") as f:
                 data = f.readlines()
-            zmatrix = Zmatrix(name=file)
-            zmatrix.read_zmatrix(data)
-            ZMs.append(zmatrix)
+            zm = Zmatrix(name=file)
+            zm.read_zmatrix(data)
+            ZMs.append(zm)
         for i, zm in enumerate(ZMs):
             if i == 0:
                 output = zm.first_ZM_output()
