@@ -59,16 +59,16 @@ for file in files:
 # the CIF, hence the call to the zm.first_ZM_output() method
 for i, zm in enumerate(ZMs):
     if i == 0:
-        output = zm.first_ZM_output()
-    output = zm.write_rigid_body(output)
+        inp = zm.first_ZM_output()
+    inp += zm.write_rigid_body()
 # Now loop over the ZMs again, this time outputting the distance restraints to
 # map the rigid bodies onto the CIF atom sites
 for i, zm in enumerate(ZMs):
-    output = zm.write_distance_restraints(output, i==0)
-output = zm.final_ZM_output(output)
+    inp += zm.write_distance_restraints(header=i==0)
+inp += zm.final_ZM_output()
 # Finally, write the resultant .inp to disk
 with open("map_ZMs.inp","w", encoding="utf-8") as f:
-    f.writelines(output)
+    f.writelines(inp)
 print("Success: map_ZMs.inp written")
 ```
 

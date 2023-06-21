@@ -8,20 +8,24 @@ st.title("Z-matrix to inp converter:")
 st.markdown("##### Easily convert from DASH Z-matrices to TOPAS rigid bodies")
 
 with st.sidebar:
-    option = st.radio("Options",["Converter","Instructions","About"])
+    option = st.radio("Options",["Converter","Settings and Instructions","About"])
 
-if option == "Instructions":
-
-    with open("Instructions.md", "r") as f:
+if "Instructions" in option:
+    with open("Settings.md","r", encoding="utf8") as f:
+        settings = f.read()
+    with open("Instructions.md", "r", encoding="utf8") as f:
         instructions = f.read()
-    st.markdown(instructions)
+    with st.expander("Settings"):
+        st.markdown(settings)
+    with st.expander("Instructions for use with TOPAS"):
+        st.markdown(instructions)
 elif option == "About":
-    """This web app was written by [Mark Spillman](https://mspillman.github.io/blog/).
+    st.write("""This web app was written by [Mark Spillman](https://mspillman.github.io/blog/).
     The source code is available
-    on my github [here](https://github.com/mspillman/zmatrix-to-inp). It can
+    on github [here](https://github.com/mspillman/zmatrix-to-inp). It can
     also be run as a standalone python script.
     Feel free to submit issues, suggestions and enhancements and I'll do my best
-    to help."""
+    to help.""")
 else:
 
     st.markdown("### Output settings")
@@ -50,16 +54,16 @@ else:
             ZMs.append(zmatrix)
         for i, zm in enumerate(ZMs):
             if i == 0:
-                output = zm.first_ZM_output()
-            output = zm.write_rigid_body(output)
+                inp = zm.first_ZM_output()
+            inp += zm.write_rigid_body()
         for i, zm in enumerate(ZMs):
-            output = zm.write_distance_restraints(output, i==0)
-        output = zm.final_ZM_output(output)
+            inp += zm.write_distance_restraints(header=i==0)
+        inp += zm.final_ZM_output()
         #with open("map_ZMs.inp","w") as f:
         #    f.writelines(output)
         st.download_button(
             label="Download inp",
-            data = "".join(output),
+            data = "".join(inp),
             file_name = "map_ZMs.inp",
             mime="text"
             )

@@ -137,7 +137,9 @@ class Zmatrix(object):
             output.append(site)
         return output
 
-    def final_ZM_output(self, output):
+    def final_ZM_output(self, output=None):
+        if output is None:
+            output = []
         output.append("\n\nonly_penalties\n")
         output.append("\nchi2_convergence_criteria 0.000001\n")
         output.append("\nOut_CIF_STR(\"mapped_ZMs.cif\")")
@@ -167,11 +169,11 @@ if __name__ == "__main__":
             ZMs.append(zm)
         for i, zm in enumerate(ZMs):
             if i == 0:
-                output = zm.first_ZM_output()
-            output = zm.write_rigid_body(output)
+                inp = zm.first_ZM_output()
+            inp = zm.write_rigid_body(inp)
         for i, zm in enumerate(ZMs):
-            output = zm.write_distance_restraints(output, i==0)
-        output = zm.final_ZM_output(output)
+            inp = zm.write_distance_restraints(inp, i==0)
+        inp = zm.final_ZM_output(inp)
         with open("map_ZMs.inp","w", encoding="utf-8") as f:
-            f.writelines(output)
+            f.writelines(inp)
         print("Success: map_ZMs.inp written")
