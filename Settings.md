@@ -18,4 +18,4 @@ Allows the user to define their own macro name for torsion angle refinement. Def
 
 ##### useH = True
 
-Toggles the inclusion of hydrogen atoms when mapping the rigid bodies onto the DASH solution. Allowed settings are True or False. This should also be supplied to the Zmatrix class during initialisation as the keyword argument `useH`.
+Toggles the inclusion of hydrogen atoms when mapping the rigid bodies onto the DASH solution.
