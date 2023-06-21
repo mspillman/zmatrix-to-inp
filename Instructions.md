@@ -1,4 +1,4 @@
-Instructions for use with TOPAS
+### Instructions for use with TOPAS
 
 The following instructions assume a basic familiarity with TOPAS used via launch mode. For more detailed information, see the TOPAS manual and excellent [tutorials by John Evans](https://topas.webspace.durham.ac.uk/).
 
