@@ -18,4 +18,4 @@ Allows the user to define their own macro name for torsion angle refinement. Def
 
 ##### useH = True
 
-Toggles the inclusion of hydrogen atoms when mapping the rigid bodies onto the DASH solution.
+Toggles the inclusion restraints based on hydrogen atoms when mapping the rigid bodies onto the DASH solution.
