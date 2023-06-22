@@ -65,6 +65,8 @@ for i, zm in enumerate(ZMs):
 # map the rigid bodies onto the CIF atom sites
 for i, zm in enumerate(ZMs):
     inp += zm.write_distance_restraints(header=i==0)
+# Now we need to write the last few keywords needed, like only_penalties etc
+# so we call the final_ZM_output() method
 inp += zm.final_ZM_output()
 # Finally, write the resultant .inp to disk
 with open("map_ZMs.inp","w", encoding="utf-8") as f:
